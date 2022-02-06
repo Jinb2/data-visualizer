@@ -1,10 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.use("/auth", require("./auth.js"));
-
-router.get("/", (req, res) => {
-  res.send({ payload: "test!" });
-});
+router.use("/login", require("./auth/login"));
+router.use("/register", require("./auth/register"));
 
 module.exports = router;

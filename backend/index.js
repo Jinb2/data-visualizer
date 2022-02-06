@@ -10,6 +10,7 @@ app.use(cors());
 
 const PORT = 5000;
 
-app.use("/api", require("./controllers"));
+// login and register routes
+app.use("/auth", require("./controllers"));
 
 app.listen(PORT, () => console.log(`listening on ${PORT}`));
