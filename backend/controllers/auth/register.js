@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../../lib/db/db");
 const bcrypt = require("bcrypt");
-
+const jwtGenerator = require("../../middlewares/jwtGenerator");
 // register user
 router.post("/", async (req, res) => {
   try {
@@ -30,9 +30,11 @@ router.post("/", async (req, res) => {
       [name, email, bcryptPassword]
     );
 
-    res.json(newUser.rows[0]);
-
     // generate our jwt token
+    console.log("New user is " + newUser.rows[0].user_id);
+    const token = jwtGenerator(newUser.rows[0].user_id);
+    console.log(token);
+    res.json({ token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
