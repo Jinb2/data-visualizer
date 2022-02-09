@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import "../styles/register.css";
-
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 const Register = ({ setAuth }) => {
   // state for the inputs to the form
   const [inputs, setInputs] = useState({
@@ -33,11 +34,33 @@ const Register = ({ setAuth }) => {
       // jwt token for user
       const jwtToken = await response.json();
 
-      // send user to login page after getting jwt token
-      setAuth(true);
+      if (jwtToken.token) {
+        setAuth(true);
 
-      // stores this jwt token
-      localStorage.setItem("token", jwtToken.token);
+        // stores this jwt token
+        localStorage.setItem("token", jwtToken.token);
+        toast.success("🦄 Registered!", {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      } else {
+        setAuth(false);
+        toast.error("This is an existing account! 👀", {
+          position: "top-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      // send user to login page after getting jwt token
     } catch (err) {
       console.error(err.message);
     }
@@ -73,6 +96,7 @@ const Register = ({ setAuth }) => {
         />
         <button className="btn btn-success btn-block">Submit</button>
       </form>
+      <Link to="/login">Login</Link>
     </Fragment>
   );
 };

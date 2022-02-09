@@ -22,7 +22,8 @@ router.post(
     }
 
     if (!errors.isEmpty()) {
-      return res.status(400).json(errorMessage);
+      let error = errorMessage.password || errorMessage.email;
+      return res.status(400).json(error);
     }
     try {
       // parse req.body
