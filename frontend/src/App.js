@@ -1,3 +1,5 @@
+import "@fontsource/inter";
+
 import { Fragment, useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
@@ -6,12 +8,16 @@ import {
   Navigate,
 } from "react-router-dom";
 
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./styles/themes";
+
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Dashboard from "./components/Dashboard";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Home from "./components/Home";
 
 toast.configure();
 
@@ -43,42 +49,45 @@ function App() {
 
   return (
     <Fragment>
-      <Router>
-        <div className="container">
-          <Routes>
-            <Route
-              path="/login"
-              element={
-                !isAuthenticated ? (
-                  <Login setAuth={setAuth} />
-                ) : (
-                  <Navigate to="/dashboard" />
-                )
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                !isAuthenticated ? (
-                  <Register setAuth={setAuth} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                isAuthenticated ? (
-                  <Dashboard setAuth={setAuth} />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-          </Routes>
-        </div>
-      </Router>
+      <ChakraProvider theme={theme}>
+        <Router>
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/login"
+                element={
+                  !isAuthenticated ? (
+                    <Login setAuth={setAuth} />
+                  ) : (
+                    <Navigate to="/dashboard" />
+                  )
+                }
+              />
+              <Route
+                path="/register"
+                element={
+                  !isAuthenticated ? (
+                    <Register setAuth={setAuth} />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  isAuthenticated ? (
+                    <Dashboard setAuth={setAuth} />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+            </Routes>
+          </div>
+        </Router>
+      </ChakraProvider>
     </Fragment>
   );
 }

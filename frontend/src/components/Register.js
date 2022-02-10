@@ -1,5 +1,4 @@
 import { Fragment, useState } from "react";
-import "../styles/register.css";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 const Register = ({ setAuth }) => {
