@@ -9,6 +9,7 @@ import {
   VisuallyHidden,
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { Link as ReachLink } from "react-router-dom";
 
 const SocialButton = ({ children, label, href }) => {
   return (
@@ -46,10 +47,15 @@ const Footer = () => {
         align={"center"}
       >
         <Stack direction={"row"} spacing={6}>
-          <Link href={"#"}>Home</Link>
-          <Link href={"#"}>About</Link>
-          <Link href={"#"}>Blog</Link>
-          <Link href={"#"}>Contact</Link>
+          <Link as={ReachLink} to="/home">
+            Home
+          </Link>
+          <Link as={ReachLink} to="/contact">
+            Contact
+          </Link>
+          <Link as={ReachLink} to="/about">
+            About
+          </Link>
         </Stack>
       </Container>
 
@@ -63,7 +69,7 @@ const Footer = () => {
           justify={{ base: "center", md: "space-between" }}
           align={{ base: "center", md: "center" }}
         >
-          <Text>© 2022 Made with ❤️ by Benson Jin</Text>
+          <Text>© 2022 Made with ChakraUI ❤️ Benson Jin </Text>
           <Stack direction={"row"} spacing={6}>
             <SocialButton label={"Twitter"} href={"#"}>
               <FaTwitter />

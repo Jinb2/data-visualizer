@@ -1,7 +1,18 @@
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as ReachLink } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Link,
+  Button,
+  Heading,
+  Text,
+} from "@chakra-ui/react";
 const Login = ({ setAuth }) => {
   const [inputs, setInputs] = useState({
     email: "",
@@ -60,27 +71,72 @@ const Login = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1 className="text-center my-5">Login</h1>
-      <form onSubmit={onSubmitForm}>
-        <input
-          className="form-control my-3"
-          type="email"
-          name="email"
-          placeholder="email"
-          value={email}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <input
-          className="form-control my-3"
-          type="password"
-          name="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <button className="btn btn-success btn-blcok">Login</button>
-      </form>
-      <Link to="/register">Register</Link>
+      <Flex minH={"100vh"} align={"center"} justify={"center"}>
+        <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+          <Stack align={"center"}>
+            <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+            <Text fontSize={"lg"} color={"gray.600"}>
+              to enjoy all of our cool{" "}
+              <Link as={ReachLink} to="/about" color={"blue.400"}>
+                features
+              </Link>{" "}
+              ✌️
+            </Text>
+          </Stack>
+          <Box
+            border="2px"
+            borderColor="gray.200"
+            rounded={"lg"}
+            boxShadow={"lg"}
+            p={8}
+          >
+            <form onSubmit={onSubmitForm}>
+              <Box mt="5%">
+                <Box>
+                  <FormControl>
+                    <FormLabel>Email</FormLabel>
+                    <Input
+                      type="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </FormControl>
+                </Box>
+              </Box>
+              <Box>
+                <Box>
+                  <FormControl>
+                    <FormLabel mt="5%">Password</FormLabel>
+                    <Input
+                      type="password"
+                      name="password"
+                      value={password}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </FormControl>
+                </Box>
+              </Box>
+
+              <Stack spacing={10} pt={2}>
+                <Button
+                  size="lg"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  <button>Sign In</button>
+                </Button>
+              </Stack>
+            </form>
+            <Link as={ReachLink} to="/register">
+              Don't have an account? Sign Up
+            </Link>
+          </Box>
+        </Stack>
+      </Flex>
     </Fragment>
   );
 };

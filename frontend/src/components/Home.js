@@ -36,22 +36,22 @@ const Home = () => {
             your awesome pretty graphs 📊.
           </Text>
           <Stack spacing={6} direction={"row"}>
-            <Button
-              rounded={"full"}
-              px={6}
-              colorScheme={"orange"}
-              bg={"orange.400"}
-              _hover={{ bg: "orange.500" }}
-            >
-              <Link as={ReachLink} to="/login">
+            <Link as={ReachLink} to="/login">
+              <Button
+                rounded={"full"}
+                px={6}
+                colorScheme={"orange"}
+                bg={"orange.400"}
+                _hover={{ bg: "orange.500" }}
+              >
                 Sign In
-              </Link>
-            </Button>
-            <Button rounded={"full"} px={6}>
-              <Link as={ReachLink} to="/register">
+              </Button>
+            </Link>
+            <Link as={ReachLink} to="/register">
+              <Button rounded={"full"} px={6}>
                 Sign Up
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </Stack>
 
           <Image boxSize="23rem" src={hero}></Image>

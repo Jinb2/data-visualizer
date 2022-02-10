@@ -1,6 +1,18 @@
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as ReachLink } from "react-router-dom";
 import { toast } from "react-toastify";
+import {
+  Box,
+  FormLabel,
+  Flex,
+  Stack,
+  FormControl,
+  Input,
+  Button,
+  Heading,
+  Text,
+  Link,
+} from "@chakra-ui/react";
 const Register = ({ setAuth }) => {
   // state for the inputs to the form
   const [inputs, setInputs] = useState({
@@ -67,35 +79,86 @@ const Register = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1 className="text-center my-5">Register</h1>
-      <form onSubmit={onSubmitForm}>
-        <input
-          className="form-control my-3"
-          type="email"
-          name="email"
-          placeholder="email"
-          value={email}
-          onChange={(e) => onChange(e)}
-        />
-        <input
-          className="form-control my-3"
-          type="password"
-          name="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-        <input
-          className="form-control my-3"
-          type="text"
-          name="name"
-          placeholder="name"
-          value={name}
-          onChange={(e) => onChange(e)}
-        />
-        <button className="btn btn-success btn-block">Submit</button>
-      </form>
-      <Link to="/login">Login</Link>
+      <Flex minH={"100vh"} align={"center"} justify={"center"}>
+        <Stack
+          border="2px"
+          borderColor="gray.200"
+          spacing={8}
+          mx={"auto"}
+          maxW={"lg"}
+          py={12}
+          px={6}
+          rounded={"lg"}
+        >
+          <Stack align={"center"}>
+            <Heading fontSize={"4xl"} textAlign={"center"}>
+              Sign up
+            </Heading>
+            <Text fontSize={"lg"} color={"gray.600"}>
+              to enjoy all of our cool features ✌️
+            </Text>
+            <form onSubmit={onSubmitForm}>
+              <Box mt="10%">
+                <Box>
+                  <FormControl>
+                    <FormLabel>Email</FormLabel>
+                    <Input
+                      type="email"
+                      name="email"
+                      value={email}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </FormControl>
+                </Box>
+              </Box>
+              <Box>
+                <Box>
+                  <FormControl>
+                    <FormLabel>Name</FormLabel>
+                    <Input
+                      type="name"
+                      name="name"
+                      value={name}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </FormControl>
+                </Box>
+              </Box>
+              <Box>
+                <Box>
+                  <FormControl>
+                    <FormLabel>Password</FormLabel>
+                    <Input
+                      type="password"
+                      name="password"
+                      value={password}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </FormControl>
+                </Box>
+              </Box>
+              <Stack spacing={10} pt={2}>
+                <Button
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  <button>Sign Up</button>
+                </Button>
+              </Stack>
+            </form>
+
+            <Text>Already a user?</Text>
+            <Link as={ReachLink} to="/login" color={"blue.400"}>
+              Sign In
+            </Link>
+          </Stack>
+        </Stack>
+      </Flex>
     </Fragment>
   );
 };
