@@ -1,7 +1,22 @@
 import { Fragment, useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  useDisclosure,
+  Button,
+  Divider,
+  Image,
+  VStack,
+} from "@chakra-ui/react";
+import InsideDiv from "./dashboard/InsideDiv";
+
 const Dashboard = ({ setAuth }) => {
   const [name, setName] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const getName = async () => {
     try {
@@ -39,10 +54,25 @@ const Dashboard = ({ setAuth }) => {
 
   return (
     <Fragment>
-      <h1>Dashboard {name}</h1>
-      <button className="btn btn-primary" onClick={(e) => logout(e)}>
-        Logout
-      </button>
+      <Button mt="2.5%" colorScheme="blue" onClick={onOpen}>
+        Menu
+      </Button>
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth="1px">{name}</DrawerHeader>
+          <DrawerBody>
+            <VStack alignItems="left" mb="5%">
+              <Image src="https://i.pravatar.cc"></Image>
+              <Button>Add graph</Button>
+              <Button>Share graph</Button>
+              <Button onClick={(e) => logout(e)}>Logout</Button>
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+      <Divider mt="1%" orientation="horizontal" />
+      <InsideDiv />
     </Fragment>
   );
 };
