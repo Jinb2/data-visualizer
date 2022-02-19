@@ -13,8 +13,18 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import InsideDiv from "./dashboard/InsideDiv";
+import Graph from "./dashboard/Graph";
 
 const Dashboard = ({ setAuth }) => {
+  // graphs to show
+  const [graphs, setGraphs] = useState([]);
+
+  // add graphs on click
+  const addGraphOnClick = (e) => {
+    setGraphs([...graphs, <Graph />]);
+    console.log(graphs);
+  };
+
   const [name, setName] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -64,7 +74,7 @@ const Dashboard = ({ setAuth }) => {
           <DrawerBody>
             <VStack alignItems="left" mb="5%">
               <Image src="https://i.pravatar.cc"></Image>
-              <Button>Add graph</Button>
+              <Button onClick={addGraphOnClick}>Add graph</Button>
               <Button>Share graph</Button>
               <Button onClick={(e) => logout(e)}>Logout</Button>
             </VStack>
@@ -72,7 +82,9 @@ const Dashboard = ({ setAuth }) => {
         </DrawerContent>
       </Drawer>
       <Divider mt="1%" orientation="horizontal" />
-      <InsideDiv />
+      {graphs.map((item, i) => (
+        <div>{item}</div>
+      ))}
     </Fragment>
   );
 };
