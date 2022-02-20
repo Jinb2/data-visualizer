@@ -19,6 +19,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import About from "./components/About";
+import LineGraph from "./components/dashboard/LineGraph";
 
 toast.configure();
 
@@ -76,6 +77,7 @@ function App() {
                   )
                 }
               />
+              <Route path="/linegraph" element={<LineGraph />} />
               <Route
                 path="/dashboard"
                 element={
