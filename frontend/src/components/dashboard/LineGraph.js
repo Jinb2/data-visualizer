@@ -9,7 +9,7 @@ import {
   Legend,
 } from "chart.js";
 import { useState, Fragment } from "react";
-import { toast } from "react-toastify";
+
 import { Line } from "react-chartjs-2";
 import {
   Heading,
@@ -18,6 +18,7 @@ import {
   FormLabel,
   Center,
   Box,
+  VStack,
 } from "@chakra-ui/react";
 
 ChartJS.register(
@@ -30,19 +31,21 @@ ChartJS.register(
   Legend
 );
 
-const LineGraph = (props) => {
+const LineGraph = ({ setAuth }) => {
   // graphs to show
   const [graphs, setGraphs] = useState([]);
 
   // state for the inputs to the form
   const [inputs, setInputs] = useState({
-    labels: "",
+    xLabel: "",
+    yLabel: "",
+    title: "",
     dataset1: "",
     dataset2: "",
   });
 
   // parse information
-  var { labels, dataset } = inputs;
+  var { xLabel, yLabel, dataset1, dataset2, title, xTitle } = inputs;
 
   // add to our state
   const onChange = (e) => {
@@ -51,55 +54,71 @@ const LineGraph = (props) => {
 
   // parse labels seperated by commas
   const parseLabels = () => {
-    labels = labels.split(",");
+    xLabel = xLabel.split(",");
+    yLabel = yLabel.split(",");
   };
 
   // parse labels seperated by commas
   const parseDataset = () => {
-    dataset = dataset.split(",");
+    dataset1 = dataset1.split(",");
+    dataset2 = dataset2.split(",");
+    console.log("dataset1 " + typeof dataset1);
+    console.log("dataset2 " + typeof dataset2);
   };
 
   // add graphs on click
   const addGraphOnClick = (e) => {
     e.preventDefault();
-    // cant create a graph if no input
-    if (labels == null || dataset == null) {
-      toast.error("Empty input!!😡", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    } else {
-      // parse user information
-      parseDataset();
-      parseLabels();
+    // parse user information
+    parseDataset();
+    parseLabels();
 
-      // data json
-      const data = {
-        labels: labels,
-        datasets: [
-          {
-            label: "First dataset",
-            data: dataset,
-            fill: true,
-            backgroundColor: "rgba(75,192,192,0.2)",
-            borderColor: "rgba(75,192,192,1)",
-          },
-          {
-            label: "Second dataset",
-            data: dataset,
-            fill: false,
-            borderColor: "#742774",
-          },
-        ],
-      };
+    // data json
+    const data = {
+      labels: xLabel,
+      datasets: [
+        {
+          label: "Company A",
+          data: dataset1,
+          borderColor: "rgb(255, 99, 132)",
+          backgroundColor: "rgba(255, 99, 132, 0.5)",
+        },
+        {
+          label: "Company b",
+          data: dataset2,
+          borderColor: "rgb(53, 162, 235)",
+          backgroundColor: "rgba(53, 162, 235, 0.5)",
+        },
+      ],
+    };
 
-      setGraphs([...graphs, <Line data={data} />]);
-    }
+    const options = {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: title,
+        },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: yLabel,
+          },
+        },
+        x: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: xTitle,
+          },
+        },
+      },
+    };
+
+    setGraphs([...graphs, <Line data={data} options={options} />]);
   };
 
   return (
@@ -109,20 +128,50 @@ const LineGraph = (props) => {
       </Center>
       <form onSubmit={addGraphOnClick}>
         <FormControl>
-          <FormLabel>Labels for x-axis</FormLabel>
-          <Input
-            onChange={(e) => onChange(e)}
-            name="labels"
-            type="text"
-            placeholder="label separated by commas"
-          />
-          <FormLabel>Dataset</FormLabel>
-          <Input
-            onChange={(e) => onChange(e)}
-            name="dataset"
-            type="text"
-            placeholder="data separated by commas"
-          />
+          <VStack alignItems="left">
+            <FormLabel>Title</FormLabel>
+            <Input
+              onChange={(e) => onChange(e)}
+              name="title"
+              type="text"
+              placeholder="Give your data a story"
+            />
+            <FormLabel>Labels for x-axis</FormLabel>
+            <Input
+              onChange={(e) => onChange(e)}
+              name="xLabel"
+              type="text"
+              placeholder="label separated by commas"
+            />
+            <FormLabel>Y-axis Title</FormLabel>
+            <Input
+              onChange={(e) => onChange(e)}
+              name="yLabel"
+              type="text"
+              placeholder="label separated by commas"
+            />
+            <FormLabel>X-axis Title</FormLabel>
+            <Input
+              onChange={(e) => onChange(e)}
+              name="xTitle"
+              type="text"
+              placeholder="Title for your x-axis"
+            />
+            <FormLabel>Dataset 1</FormLabel>
+            <Input
+              onChange={(e) => onChange(e)}
+              name="dataset1"
+              type="text"
+              placeholder="data separated by commas"
+            />
+            <FormLabel>Dataset 2</FormLabel>
+            <Input
+              onChange={(e) => onChange(e)}
+              name="dataset2"
+              type="text"
+              placeholder="data separated by commas"
+            />
+          </VStack>
         </FormControl>
         <Box
           as="button"
@@ -131,11 +180,12 @@ const LineGraph = (props) => {
           color="white"
           px={4}
           h={8}
-          mt="5%"
+          mt="2%"
         >
           <button>Create a graph</button>
         </Box>
       </form>
+
       {graphs.map((item, i) => (
         <div>{item}</div>
       ))}

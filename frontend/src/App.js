@@ -77,7 +77,16 @@ function App() {
                   )
                 }
               />
-              <Route path="/linegraph" element={<LineGraph />} />
+              <Route
+                path="/linegraph"
+                element={
+                  isAuthenticated ? (
+                    <LineGraph setAuth={setAuth} />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
               <Route
                 path="/dashboard"
                 element={
